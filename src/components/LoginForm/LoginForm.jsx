@@ -1,22 +1,23 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './LoginForm.css'
 
 const LoginForm = () => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault();  
     const authString = `${userName}:${password}`;
     // conversion to base64 
     const basicAuthToken = btoa(authString);  
-      
+
     const url = '/api/tms/hs/es-api/auth';
     const requestBody = {
       login: userName,
       password: password
     };
-
     // console.log('Token:', basicAuthToken);
     // console.log('Request:', JSON.stringify(requestBody));
 
@@ -36,7 +37,9 @@ const LoginForm = () => {
       })
       .then((data) => {
         localStorage.setItem('authToken', data.token);
-        console.log('Token saved', data.token);
+        // console.log('Token saved', data.token);
+        navigate('/orders');
+
       })
       .catch(error => {
         console.error('ERROR:', error);
