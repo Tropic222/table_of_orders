@@ -11,7 +11,7 @@ const LoginForm = () => {
     // conversion to base64 
     const basicAuthToken = btoa(authString);  
       
-    const url = 'http://test.ref-go.ru/tms/hs/es-api/auth';
+    const url = '/api/tms/hs/es-api/auth';
     const requestBody = {
       login: userName,
       password: password
