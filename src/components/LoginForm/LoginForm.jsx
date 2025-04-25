@@ -2,12 +2,44 @@ import React, { useState } from 'react'
 import './LoginForm.css'
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Username:', username, 'Password:', password);
+    e.preventDefault();  
+    const authString = `${userName}:${password}`;
+    // conversion to base64 
+    const basicAuthToken = btoa(authString);  
+      
+    const url = 'http://test.ref-go.ru/tms/hs/es-api/auth';
+    const requestBody = {
+      login: userName,
+      password: password
+    };
+
+    console.log('Token:', basicAuthToken);
+    console.log('Request:', JSON.stringify(requestBody));
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${basicAuthToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody)
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(data => {
+        console.log('Response server:', data);
+      })
+      .catch(error => {
+        console.error('ERROR:', error);
+      });
   };
 
   return (
@@ -17,9 +49,9 @@ const LoginForm = () => {
           <input
             type="text"
             id="user"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            placeholder="UserName"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
           />
         </div>
         <div className="input-group">
