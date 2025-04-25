@@ -17,8 +17,8 @@ const LoginForm = () => {
       password: password
     };
 
-    console.log('Token:', basicAuthToken);
-    console.log('Request:', JSON.stringify(requestBody));
+    // console.log('Token:', basicAuthToken);
+    // console.log('Request:', JSON.stringify(requestBody));
 
     fetch(url, {
       method: 'POST',
@@ -34,8 +34,9 @@ const LoginForm = () => {
         }
         return res.json();
       })
-      .then(data => {
-        console.log('Response server:', data);
+      .then((data) => {
+        localStorage.setItem('authToken', data.token);
+        console.log('Token saved', data.token);
       })
       .catch(error => {
         console.error('ERROR:', error);
