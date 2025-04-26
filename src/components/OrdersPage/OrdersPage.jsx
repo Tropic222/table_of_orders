@@ -33,9 +33,9 @@ const OrdersPage = () => {
     } catch (error) {
       console.error('Error when receiving orders:', error);
       if (axios.isAxiosError(error) && error.response) {
-        setError(`Ошибка: ${error.response.status} - ${error.response.statusText}`);
+        setError(`Error: ${error.response.status} - ${error.response.statusText}`);
       } else {
-        setError('Ошибка при загрузке заказов');
+        setError('Error loading orders');
       }
     } finally {
       setLoading(false);
