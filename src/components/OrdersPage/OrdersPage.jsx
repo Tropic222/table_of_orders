@@ -1,5 +1,5 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import './OrdersPage.css'
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
@@ -10,34 +10,32 @@ const OrdersPage = () => {
     const token = localStorage.getItem('authToken');
     const basicAuthToken = localStorage.getItem('basicAuthToken');
 
-    const fromDate = '2000-01-01T00:00:00';
-    const toDate = '2025-12-31T23:59:59';
+    const fromDate = '2024-01-01T00:00:00';
+    const toDate = '2024-12-31T23:59:59';
 
-    const url = `/api/tms/hs/es-api/docs/orders`;
+    let url = `/api/tms/hs/es-api/docs/orders?from_date=${encodeURIComponent(fromDate)}&to_date=${encodeURIComponent(toDate)}`;
 
     try {
-      const response = await axios.get(url, {
-        params: {
-          from_date: fromDate,
-          to_date: toDate,
-        },
+      const response = await fetch(url, {
+        method: 'GET',
         headers: {
-          Authorization: `Basic ${basicAuthToken}`,
-          token: token,
-        },
+          'Authorization': `Basic ${basicAuthToken}`,
+          'token': token
+        }
       });
 
-      console.log('Order:', response.data);
+      if (!response.ok) {
+        throw new Error(`Error order loading: ${response.status}`);
+      }
 
-      setOrders(response.data.orders || []);
+      const data = await response.json();
+      // console.log('Order:', data);
+
+      setOrders(data.orders || []); 
+      setLoading(false);
     } catch (error) {
       console.error('Error when receiving orders:', error);
-      if (axios.isAxiosError(error) && error.response) {
-        setError(`Error: ${error.response.status} - ${error.response.statusText}`);
-      } else {
-        setError('Error loading orders');
-      }
-    } finally {
+      setError(error.message);
       setLoading(false);
     }
   };
@@ -51,7 +49,7 @@ const OrdersPage = () => {
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div>Ошибка: {error}</div>;
   }
 
   return (
