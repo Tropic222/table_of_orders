@@ -25,7 +25,7 @@ const LoginForm = () => {
       method: 'POST',
       headers: {
         'Authorization': `Basic ${basicAuthToken}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(requestBody)
     })
