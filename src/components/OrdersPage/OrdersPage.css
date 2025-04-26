@@ -43,11 +43,10 @@ li {
   text-align: center;
   margin-top: 20px;
 
-  /* Центрирование по вертикали и горизонтали */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Занимает всю высоту экрана */
+  height: 100vh;
 }
 
 

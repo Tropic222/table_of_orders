@@ -1,12 +1,53 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Запуск
 
-Currently, two official plugins are available:
+## 1. Клонируйте репозиторий
+```bash
+git clone <ссылка-на-репозиторий>
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 2. Перейдите в папку проекта
+```bash
+git clone <ссылка-на-репозиторий>
+```
 
-## Expanding the ESLint configuration
+## 3. Установите зависимости
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 4. Запустите проект в режиме разработки
+```bash
+npm run dev
+```
+
+
+# 🔑 Основной функционал
+
+- Авторизация пользователя через API с базовой авторизацией (`Basic Auth`)
+- Сохранение токенов в `localStorage`
+- Получение списка заказов по датам
+- Фильтрация заказов по дате "с" и "по"
+- Отображение ошибок загрузки
+
+---
+
+# 🛠️ Стек технологий
+
+- [React]
+- [Vite]
+- [React Router]
+
+---
+
+# 🧠 Как работает авторизация
+
+1. Пользователь вводит логин и пароль.
+2. Формируется `Basic Auth Token` (Base64 кодирование строки `username:password`).
+3. Выполняется `POST`-запрос на `/api/tms/hs/es-api/auth` с передачей токена и данных.
+4. Если авторизация успешна — сохраняются:
+   - `authToken` (от API)
+   - `basicAuthToken` (сформированный вручную)
+5. После успешной авторизации пользователь перенаправляется на `/orders`.
+
+---
