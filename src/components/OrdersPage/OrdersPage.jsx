@@ -44,6 +44,11 @@ const OrdersPage = () => {
     fetchOrders();
   }, []);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('ru-RU'); 
+  };
+
   if (loading) {
     return <div>Загрузка заказов...</div>;
   }
@@ -63,7 +68,7 @@ const OrdersPage = () => {
           {orders.map((order, index) => (
             <li key={index}>
               <strong>№ заказа:</strong> {order.num} <br />
-              <strong>Дата:</strong> {order.create_date} <br />
+              <strong>Дата:</strong> {formatDate(order.create_date)} <br />
             </li>
           ))}
         </ul>
