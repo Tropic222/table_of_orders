@@ -5,23 +5,29 @@ const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [fromDate, setFromDate] = useState('2024-01-01');
+  const [toDate, setToDate] = useState('2024-12-31');
 
+  
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('ru-RU');
+  };
+
+  
   const fetchOrders = async () => {
     const token = localStorage.getItem('authToken');
     const basicAuthToken = localStorage.getItem('basicAuthToken');
 
-    const fromDate = '2024-01-01T00:00:00';
-    const toDate = '2024-12-31T23:59:59';
-
-    let url = `/api/tms/hs/es-api/docs/orders?from_date=${encodeURIComponent(fromDate)}&to_date=${encodeURIComponent(toDate)}`;
+    const url = `/api/tms/hs/es-api/docs/orders?from_date=${encodeURIComponent(fromDate)}&to_date=${encodeURIComponent(toDate)}`;
 
     try {
       const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Authorization': `Basic ${basicAuthToken}`,
-          'token': token
-        }
+          'token': token,
+        },
       });
 
       if (!response.ok) {
@@ -29,9 +35,7 @@ const OrdersPage = () => {
       }
 
       const data = await response.json();
-      // console.log('Order:', data);
-
-      setOrders(data.orders || []); 
+      setOrders(data.orders || []);
       setLoading(false);
     } catch (error) {
       console.error('Error when receiving orders:', error);
@@ -40,13 +44,18 @@ const OrdersPage = () => {
     }
   };
 
+  
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [fromDate, toDate]);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ru-RU'); 
+  
+  const handleFromDateChange = (e) => {
+    setFromDate(e.target.value);
+  };
+
+  const handleToDateChange = (e) => {
+    setToDate(e.target.value);
   };
 
   if (loading) {
@@ -58,8 +67,29 @@ const OrdersPage = () => {
   }
 
   return (
-    <div>
+    <div className="orders-page">
       <h1>Список заказов</h1>
+
+      
+      <div className="filter">
+        <label>
+          с:
+           <input
+            type="date"
+            value={fromDate}
+            onChange={handleFromDateChange}
+          />
+        </label>
+        <label>
+          по:
+          <input
+            type="date"
+            value={toDate}
+            onChange={handleToDateChange}
+          />
+        </label>
+        <button onClick={fetchOrders}>Применить фильтр</button>
+      </div>
 
       {orders.length === 0 ? (
         <p>Заказы не найдены.</p>
