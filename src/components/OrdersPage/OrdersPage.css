@@ -38,3 +38,87 @@ li {
 }
 
 
+/* ----------------------------------------- */
+
+
+.filter button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 10px;
+}
+
+
+.filter button:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+
+.filter button:active {
+  background-color: #388e3c;
+  transform: translateY(2px);
+}
+
+
+.filter button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+
+.filter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.filter label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.filter input {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  width: 180px;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+}
+
+
+.orders-page ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.orders-page li {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.orders-page li strong {
+  color: #4caf50;
+}
+
+.orders-page li {
+  font-size: 16px;
+  color: #333;
+}
+
+.orders-page li br {
+  margin-bottom: 8px;
+}

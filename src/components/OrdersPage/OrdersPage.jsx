@@ -88,7 +88,7 @@ const OrdersPage = () => {
             onChange={handleToDateChange}
           />
         </label>
-        <button onClick={fetchOrders}>Применить фильтр</button>
+        
       </div>
 
       {orders.length === 0 ? (
