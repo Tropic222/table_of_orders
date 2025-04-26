@@ -1,47 +1,40 @@
+
 .orders-page {
   font-family: Arial, sans-serif;
   padding: 20px;
+  background-color: #f4f4f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+
 h1 {
-  font-size: 24px;
+  font-size: 28px;
   color: #333;
   margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
 }
+
 
 ul {
   list-style-type: none;
   padding: 0;
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
 }
 
 li {
-  background-color: #f9f9f9;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-li strong {
-  color: #555;
-}
-
-li br {
-  margin-bottom: 5px;
-}
-
-.loading,
-.error {
-  font-size: 18px;
-  color: #ff5722;
-  text-align: center;
-  margin-top: 20px;
-}
-
-.no-orders {
-  font-size: 18px;
-  color: #999;
-  text-align: center;
-  margin-top: 20px;
-}
 
