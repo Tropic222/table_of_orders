@@ -37,7 +37,7 @@ const LoginForm = () => {
       })
       .then((data) => {
         localStorage.setItem('authToken', data.token);
-        // console.log('Token saved', data.token);
+        localStorage.setItem('basicAuthToken', basicAuthToken);
         navigate('/orders');
 
       })
