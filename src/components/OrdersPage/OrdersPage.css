@@ -37,6 +37,20 @@ li {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.loading {
+  font-size: 18px;
+  color: #000000;
+  text-align: center;
+  margin-top: 20px;
+
+  /* Центрирование по вертикали и горизонтали */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Занимает всю высоту экрана */
+}
+
+
 
 /* ----------------------------------------- */
 
@@ -122,3 +136,4 @@ li {
 .orders-page li br {
   margin-bottom: 8px;
 }
+

@@ -59,7 +59,7 @@ const OrdersPage = () => {
   };
 
   if (loading) {
-    return <div>Загрузка заказов...</div>;
+    return <div className="loading">Загрузка заказов...</div>;
   }
 
   if (error) {
