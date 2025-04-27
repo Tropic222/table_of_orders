@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { fetchOrders } from '../../api/api.jsx'
 import './OrdersPage.css'
 
 const OrdersPage = () => {
@@ -14,57 +15,29 @@ const OrdersPage = () => {
     return date.toLocaleDateString('ru-RU');
   };
 
-  
-  const fetchOrders = async () => {
-    const token = localStorage.getItem('authToken');
-    const basicAuthToken = localStorage.getItem('basicAuthToken');
+  const handleFromDateChange = (e) => setFromDate(e.target.value);
+  const handleToDateChange = (e) => setToDate(e.target.value);
 
-    const url = `/api/tms/hs/es-api/docs/orders?from_date=${encodeURIComponent(fromDate)}&to_date=${encodeURIComponent(toDate)}`;
-
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Basic ${basicAuthToken}`,
-          'token': token,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error order loading: ${response.status}`);
-      }
-
-      const data = await response.json();
-      setOrders(data.orders || []);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error when receiving orders:', error);
-      setError(error.message);
-      setLoading(false);
-    }
-  };
-
-  
   useEffect(() => {
-    fetchOrders();
+    const fetchData = async () => {
+      const token = localStorage.getItem('authToken');
+      const basicAuthToken = localStorage.getItem('basicAuthToken');
+
+      try {
+        const ordersData = await fetchOrders(token, basicAuthToken, fromDate, toDate);
+        setOrders(ordersData);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, [fromDate, toDate]);
 
-  
-  const handleFromDateChange = (e) => {
-    setFromDate(e.target.value);
-  };
-
-  const handleToDateChange = (e) => {
-    setToDate(e.target.value);
-  };
-
-  if (loading) {
-    return <div className="loading">Загрузка заказов...</div>;
-  }
-
-  if (error) {
-    return <div>Ошибка: {error}</div>;
-  }
+  if (loading) return <div className="loading">Загрузка заказов...</div>;
+  if (error) return <div>Ошибка: {error}</div>;
 
   return (
     <div className="orders-page">

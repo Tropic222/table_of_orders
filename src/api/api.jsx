@@ -27,3 +27,19 @@ export const login = async(userName, password) => {
   }
 };
 
+// get orders OrdersPage
+export const fetchOrders = async (token, basicAuthToken, fromDate, toDate) => {
+  const url = `docs/orders?from_date=${encodeURIComponent(fromDate)}&to_date=${encodeURIComponent(toDate)}`;
+  
+  try {
+    const response = await api.get(url, {
+      headers: {
+        Authorization: `Basic ${basicAuthToken}`,
+        token,
+      },
+    });
+    return response.data.orders || [];
+  } catch (error) {
+    throw new Error(`Error loading orders: ${error.message}`);
+  }
+};
