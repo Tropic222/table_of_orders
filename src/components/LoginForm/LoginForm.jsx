@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { login } from '../../api/api'
 import './LoginForm.css'
 
 const LoginForm = () => {
@@ -7,43 +8,18 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
-    e.preventDefault();  
-    const authString = `${userName}:${password}`;
-    // conversion to base64 
-    const basicAuthToken = btoa(authString);  
-
-    const url = '/api/tms/hs/es-api/auth';
-    const requestBody = {
-      login: userName,
-      password: password
-    };
-    // console.log('Token:', basicAuthToken);
-    // console.log('Request:', JSON.stringify(requestBody));
-
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Basic ${basicAuthToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody)
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        localStorage.setItem('authToken', data.token);
-        localStorage.setItem('basicAuthToken', basicAuthToken);
-        navigate('/orders');
-
-      })
-      .catch(error => {
-        console.error('ERROR:', error);
-      });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const data = await login(userName, password);
+      localStorage.setItem('authToken', data.token);
+      const basicAuthToken = btoa(`${userName}:${password}`);
+      localStorage.setItem('basicAuthToken', basicAuthToken);
+      navigate('/orders');
+    } catch (error) {
+      console.error('Login error:', error);
+    }
   };
 
   return (
