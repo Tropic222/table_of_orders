@@ -69,11 +69,17 @@ const OrdersPage = () => {
       ) : (
         <ul>
           {orders.map((order, index) => (
-            <li key={index}>
-              <strong>№ заказа:</strong> {order.num} <br />
-              <strong>Дата:</strong> {formatDate(order.create_date)} <br />
-            </li>
-          ))}
+  <li key={index} className="order-item">
+    <a 
+      href={`/orders/${order.num}/view`} 
+      className="order-link"
+    >
+      <strong>№ заказа:</strong> {order.num}
+      <br />
+      <strong>Дата:</strong> {formatDate(order.create_date)}
+    </a>
+  </li>
+))}
         </ul>
       )}
     </div>

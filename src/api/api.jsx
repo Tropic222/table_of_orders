@@ -43,3 +43,19 @@ export const fetchOrders = async (token, basicAuthToken, fromDate, toDate) => {
     throw new Error(`Error loading orders: ${error.message}`);
   }
 };
+
+// get order by num
+export const fetchOrderById = async (token, basicAuthToken, num) => {
+  const url = `docs/orders?num=${encodeURIComponent(num)}`;
+  try {
+    const response = await api.get(url, {
+      headers: {
+        Authorization: `Basic ${basicAuthToken}`,
+        token,
+      },
+    });
+    return response.data.orders[0];
+  } catch (error) {
+    throw new Error(`Error loading order: ${error.message}`);
+  }
+};

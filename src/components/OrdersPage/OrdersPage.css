@@ -136,3 +136,27 @@ li {
   margin-bottom: 8px;
 }
 
+/* button order-link*/
+
+.order-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 8px;
+}
+
+.order-link:hover {
+  background-color: #f0f0f0; 
+}
+
+.order-item {
+  cursor: pointer;
+  margin: 4px 0;
+  border-radius: 4px;
+  list-style-type: none; 
+}
+
+
+.orders-page ul {
+  padding-left: 0;
+}
