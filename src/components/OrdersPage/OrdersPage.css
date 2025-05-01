@@ -141,6 +141,7 @@ li {
 .order-link {
   display: block;
   text-decoration: none;
+  border-radius: 10px;
   color: inherit;
   padding: 8px;
 }

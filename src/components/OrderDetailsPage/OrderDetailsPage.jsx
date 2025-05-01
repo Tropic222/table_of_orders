@@ -204,7 +204,11 @@ console.log(order)
           <p>Товаров нет</p>
         )}
       </section>
-
+			<button 
+  			onClick={() => window.history.back()}
+  			className="back-button">
+  				<i className="fas fa-arrow-left"></i> Назад
+			</button>
     </div>
   );
 };
