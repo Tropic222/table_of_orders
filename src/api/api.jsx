@@ -59,3 +59,26 @@ export const fetchOrderById = async (token, basicAuthToken, num) => {
     throw new Error(`Error loading order: ${error.message}`);
   }
 };
+
+
+// POST 
+export const updateOrder = async (token, basicAuthToken, orderData) => {
+  const url = 'docs/orders';
+
+  try {
+    const response = await api.post(url, orderData, {
+      headers: {
+        Authorization: `Basic ${basicAuthToken}`,
+        token,
+      },
+    });
+
+    if (response.data.success) {
+      return response.data; 
+    } else {
+      throw new Error(response.data.errors?.join(', ') || 'Неизвестная ошибка');
+    }
+  } catch (error) {
+    throw new Error(`Ошибка при сохранении: ${error.message}`);
+  }
+};

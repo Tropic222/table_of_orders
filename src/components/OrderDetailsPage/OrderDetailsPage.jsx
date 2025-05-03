@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { fetchOrderById } from '../../api/api'
 import './OrderDetailsPage.css'
 
@@ -90,18 +90,18 @@ console.log(order)
         <h3>Основная информация</h3>
         <p><strong>Дата создания:</strong> {new Date(create_date).toLocaleString()}</p>
         <p><strong>Тип доставки:</strong> {deliveryTypeMap[type] || type}</p>
-        <p><strong>Регион:</strong> {region}</p>
+        <p><strong>Регион:</strong> {region || '-'}</p>
         <p><strong>Статус:</strong> {statusMap[status] || status}</p>
         <p><strong>Комментарий к статусу:</strong> {status_comment || '-'}</p>
         <p><strong>Дата изменения статуса:</strong> {new Date(status_date).toLocaleString()}</p>
-        <p><strong>Вес:</strong> {weight} кг</p>
-        <p><strong>Объем:</strong> {volume} м³</p>
-        <p><strong>Объемный вес:</strong> {v_weight} кг</p>
+        <p><strong>Вес:</strong> {weight || '-'} кг</p>
+        <p><strong>Объем:</strong> {volume || '-'} м³</p>
+        <p><strong>Объемный вес:</strong> {v_weight || '-'} кг</p>
         <p><strong>Габариты:</strong> {width}x{height}x{length} м</p>
-        <p><strong>Количество мест:</strong> {places}</p>
-        <p><strong>Штрихкод:</strong> {barcode}</p>
+        <p><strong>Количество мест:</strong> {places || '-'}</p>
+        <p><strong>Штрихкод:</strong> {barcode || '-'}</p>
         <p><strong>Внешний номер:</strong> {ext_num || '-'}</p>
-        <p><strong>Срочность:</strong> {urgency}</p>
+        <p><strong>Срочность:</strong> {urgency || '-'}</p>
         <p><strong>Курьер:</strong> {courier || '-'}</p>
       </section>
 
@@ -110,10 +110,10 @@ console.log(order)
         <h3>Получатель</h3>
         {Client ? (
           <>
-            <p><strong>Имя:</strong> {Client.name}</p>
+            <p><strong>Имя:</strong> {Client.name || '-'}</p>
             <p><strong>Контакт:</strong> {Client.contact || '-'}</p>
-            <p><strong>Телефон:</strong> {Client.phone}</p>
-            <p><strong>Адрес:</strong> {Client.address}</p>
+            <p><strong>Телефон:</strong> {Client.phone || '-'}</p>
+            <p><strong>Адрес:</strong> {Client.address || '-'}</p>
             <p><strong>Дата доставки:</strong> {new Date(Client.send_date).toLocaleDateString()}</p>
             <p><strong>Интервал доставки:</strong> с {new Date(Client.send_date_from).toLocaleTimeString()} до {new Date(Client.send_date_to).toLocaleTimeString()}</p>
             <p><strong>Интервал сдачи:</strong> {new Date(Client.order_delivery_interval).toLocaleTimeString()}</p>
@@ -158,8 +158,8 @@ console.log(order)
         <h3>Оплата</h3>
         {Payments ? (
           <>
-            <p><strong>Сумма наложенного платежа:</strong> {Payments.cod_sum} ₽</p>
-            <p><strong>Стоимость доставки:</strong> {Payments.delivery_price} ₽</p>
+            <p><strong>Сумма наложенного платежа:</strong> {Payments.cod_sum || 0} ₽</p>
+            <p><strong>Стоимость доставки:</strong> {Payments.delivery_price || 0} ₽</p>
             <p><strong>Объявленная стоимость:</strong> {Payments.declared_price || 0} ₽</p>
             <p><strong>Предоплачен:</strong> {Payments.prepaid ? 'Да' : 'Нет'}</p>
           </>
@@ -204,11 +204,22 @@ console.log(order)
           <p>Товаров нет</p>
         )}
       </section>
-			<button 
-  			onClick={() => window.history.back()}
-  			className="back-button">
-  				<i className="fas fa-arrow-left"></i> Назад
-			</button>
+      
+			<div className='action-buttons'>
+          <button 
+            onClick={() => window.history.back()}
+            className="action-button back-button"
+          >
+            Назад
+          </button>
+
+          <Link 
+            to={`/orders/${order.num}/edit`} 
+            className="action-button edit-button"
+          >
+            Редактировать
+          </Link>
+      </div>
     </div>
   );
 };
